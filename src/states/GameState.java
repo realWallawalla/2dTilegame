@@ -1,6 +1,7 @@
 package states;
 
 import entities.creatures.Player;
+import game.Game;
 
 import java.awt.*;
 
@@ -10,8 +11,9 @@ import java.awt.*;
 public class GameState extends State {
     private Player player;
 
-    public GameState(){
-        player = new Player(50,50);
+    public GameState(Game game){
+        super(game);
+        player = new Player(game, 50,50);
 
     }
 

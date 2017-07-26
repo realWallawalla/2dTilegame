@@ -1,6 +1,7 @@
 package game;
 
 import com.company.Display;
+import input.KeyManager;
 import states.GameState;
 import states.MenuState;
 import states.State;
@@ -28,11 +29,15 @@ public class Game implements Runnable { //implements runnable which allows to ru
     private State gameState;
     private State menuState;
 
+    //input
+    private KeyManager keyManager;
+
 
     public Game(String title, int witdh, int height){
         this.witdh = witdh;
         this.height = height;
         this.title = title;
+        keyManager = new KeyManager();
 
     }
 
@@ -50,9 +55,10 @@ public class Game implements Runnable { //implements runnable which allows to ru
 
     private void init(){
         display = new Display(title, witdh, height);
+        display.getFrame().addKeyListener(keyManager);
         Assets.init(); // loads all images, music etcetera once.
-        gameState = new GameState();
-        menuState = new MenuState();
+        gameState = new GameState(this); //this refers to this game class
+        menuState = new MenuState(this);
         State.setStete(gameState);
 //        State.setStete(menuState);
 
@@ -92,6 +98,10 @@ public class Game implements Runnable { //implements runnable which allows to ru
         stop();
     }
 
+    public KeyManager getKeyManager(){
+        return keyManager;
+    }
+
     public synchronized void stop(){ // closes thread
         if (!running) // acting as safety if method is reintialized
             return;
@@ -107,6 +117,8 @@ public class Game implements Runnable { //implements runnable which allows to ru
 
 
     private void tick(){ //updates game
+        keyManager.tick();
+
         if (State.getState() != null){
             State.getState().tick();
         }
