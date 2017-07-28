@@ -9,15 +9,20 @@ public class Assets {
 
     //pixels for croping out from spriteSheet, create sprite sheet with right dimenesions.
     private static final int width = 230, height = 280;
+    private static final int width2 = 64, height2 = 64;
 
-    public static BufferedImage player, player2, player3;
+    public static BufferedImage player, stone, sand, grass, dirt, sandStone;
 
     public static void init(){
         SpriteSheet sheet = new SpriteSheet(ImageLoader.loadImage("/textures/spriteSheetTest.png"));
+        SpriteSheet sheet2 = new SpriteSheet(ImageLoader.loadImage("/textures/mapTiles.png"));
 
-        player = sheet.crop(50, 50, width, height); // first grid space
-        player2 = sheet.crop(width, 0, width, height); // second grid space and so on
-        player3 = sheet.crop(width * 2, 0, width, height); // second grid space and so on, when changing row, y = height.
+        player = sheet.crop(50, 50, width, height); // first grid space. PLAYER
+        stone = sheet2.crop(0, 0, width2, height2); // second grid space and so on. STONE
+        sand = sheet2.crop(0, height2, width2, height2); // second grid space and so on, when changing row, y = height.
+        grass = sheet2.crop(0, (height2 * 2), width2, height2);
+        dirt = sheet2.crop(0, (height2 * 3), width2, height2);
+        sandStone = sheet2.crop(0, (height2 * 4), width2, height2);
         //...
 
     }

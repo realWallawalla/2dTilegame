@@ -134,7 +134,10 @@ public class Game implements Runnable { //implements runnable which allows to ru
         g = bs.getDrawGraphics(); // draw graphics with bufferstrategy
         //Clear the screen
         g.clearRect(0,0, witdh, height);
+
         //draw here
+
+
 
         if (State.getState() != null){
             State.getState().render(g);

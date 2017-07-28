@@ -10,30 +10,39 @@ public class Player extends Creature {
     private Game game;
 
     public Player(Game game, float x, float y) {
-        super(x, y); // pass to the extented class
+        super(x, y, DEFAULT_CREATURE_WIDTH, DEFAULT_CREATURE_HEIGHT); // pass to the extented class
         this.game = game;
     }
 
     @Override
     public void tick() {
+        getInput();
+        move();
+
+    }
+
+    private void getInput(){
+        xMove = 0;
+        yMove = 0;
+
         if(game.getKeyManager().up){
-            y-=10;
+            yMove = -speed;
         }
         if(game.getKeyManager().down){
-            y+=10;
+            yMove = speed;
         }
         if(game.getKeyManager().left){
-            x-=10;
+            xMove = -speed;
         }
         if(game.getKeyManager().right){
-            x+=10;
+            xMove = speed;
         }
 
     }
 
     @Override
     public void render(Graphics g) {
-        g.drawImage(Assets.player,(int)x,(int)y,null);
+        g.drawImage(Assets.player,(int)x,(int)y, width, height, null);
 
     }
 
