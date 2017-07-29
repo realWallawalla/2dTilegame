@@ -1,6 +1,7 @@
 package entities.creatures;
 
 import entities.Entity;
+import game.Game;
 import org.omg.CORBA.PUBLIC_MEMBER;
 
 public abstract class Creature extends Entity {
@@ -14,8 +15,8 @@ public abstract class Creature extends Entity {
     protected float xMove,
                     yMove;
 
-    public Creature(float x, float y, int width, int height) {
-        super(x, y, width, height);// pass along x and y to super class
+    public Creature(Game game, float x, float y, int width, int height) {
+        super(game, x, y, width, height);// pass along x and y to super class
         health = DEFAULT_HEALTH;
         speed = DEFAULT_SPEED;
         xMove = 0;

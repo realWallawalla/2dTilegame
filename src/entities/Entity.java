@@ -1,5 +1,7 @@
 package entities;
 
+import game.Game;
+
 import java.awt.*;
 
 public abstract class Entity {
@@ -7,8 +9,10 @@ public abstract class Entity {
    protected float y;
    protected int width;
    protected int height;
+   protected Game game;
 
-    public Entity(float x, float y, int width, int height) {
+    public Entity(Game game, float x, float y, int width, int height) {
+        this.game = game;
         this.width=width;
         this.height=height;
         this.x = x;

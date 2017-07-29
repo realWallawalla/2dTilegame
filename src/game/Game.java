@@ -1,6 +1,7 @@
 package game;
 
 import com.company.Display;
+import gfx.GameCamera;
 import input.KeyManager;
 import states.GameState;
 import states.MenuState;
@@ -15,8 +16,8 @@ import java.awt.image.BufferStrategy;
  */
 public class Game implements Runnable { //implements runnable which allows to run on a thread.
     private Display display;
-    public int witdh;
-    public int height;
+    private int witdh;
+    private int height;
     public String title;
 
     private boolean running = false;
@@ -31,6 +32,9 @@ public class Game implements Runnable { //implements runnable which allows to ru
 
     //input
     private KeyManager keyManager;
+
+    //Camera
+    private GameCamera gameCamera;
 
 
     public Game(String title, int witdh, int height){
@@ -57,6 +61,9 @@ public class Game implements Runnable { //implements runnable which allows to ru
         display = new Display(title, witdh, height);
         display.getFrame().addKeyListener(keyManager);
         Assets.init(); // loads all images, music etcetera once.
+
+        gameCamera = new GameCamera(this, 0, 0);
+
         gameState = new GameState(this); //this refers to this game class
         menuState = new MenuState(this);
         State.setStete(gameState);
@@ -100,6 +107,18 @@ public class Game implements Runnable { //implements runnable which allows to ru
 
     public KeyManager getKeyManager(){
         return keyManager;
+    }
+
+    public GameCamera getGameCamera(){
+        return gameCamera;
+    }
+
+    public int getWitdh() {
+        return witdh;
+    }
+
+    public int getHeight() {
+        return height;
     }
 
     public synchronized void stop(){ // closes thread
