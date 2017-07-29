@@ -1,22 +1,22 @@
 package entities.creatures;
 
-import entities.creatures.Creature;
 import game.Game;
+import game.Handler;
 import gfx.Assets;
 
 import java.awt.*;
 
 public class Player extends Creature {
 
-    public Player(Game game, float x, float y) {
-        super(game, x, y, DEFAULT_CREATURE_WIDTH, DEFAULT_CREATURE_HEIGHT); // pass to the extented class
+    public Player(Handler handler, float x, float y) {
+        super(handler, x, y, DEFAULT_CREATURE_WIDTH, DEFAULT_CREATURE_HEIGHT); // pass to the extented class
     }
 
     @Override
     public void tick() {
         getInput();
         move();
-        game.getGameCamera().centerOnEntity(this); //center on this player
+        handler.getGameCamera().centerOnEntity(this); //center on this player
 
     }
 
@@ -24,16 +24,16 @@ public class Player extends Creature {
         xMove = 0;
         yMove = 0;
 
-        if(game.getKeyManager().up){
+        if(handler.getKeyManager().up){
             yMove = -speed;
         }
-        if(game.getKeyManager().down){
+        if(handler.getKeyManager().down){
             yMove = speed;
         }
-        if(game.getKeyManager().left){
+        if(handler.getKeyManager().left){
             xMove = -speed;
         }
-        if(game.getKeyManager().right){
+        if(handler.getKeyManager().right){
             xMove = speed;
         }
 
@@ -41,8 +41,8 @@ public class Player extends Creature {
 
     @Override
     public void render(Graphics g) {
-        g.drawImage(Assets.player,(int)(x - game.getGameCamera().getxOffset()),
-                (int)(y - game.getGameCamera().getyOffset()), width, height, null);
+        g.drawImage(Assets.player,(int)(x - handler.getGameCamera().getxOffset()),
+                (int)(y - handler.getGameCamera().getyOffset()), width, height, null);
 
     }
 

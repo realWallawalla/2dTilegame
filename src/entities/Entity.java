@@ -1,6 +1,6 @@
 package entities;
 
-import game.Game;
+import game.Handler;
 
 import java.awt.*;
 
@@ -9,10 +9,10 @@ public abstract class Entity {
    protected float y;
    protected int width;
    protected int height;
-   protected Game game;
+   protected Handler handler;
 
-    public Entity(Game game, float x, float y, int width, int height) {
-        this.game = game;
+    public Entity(Handler handler, float x, float y, int width, int height) {
+        this.handler = handler;
         this.width=width;
         this.height=height;
         this.x = x;

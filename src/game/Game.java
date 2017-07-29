@@ -36,6 +36,9 @@ public class Game implements Runnable { //implements runnable which allows to ru
     //Camera
     private GameCamera gameCamera;
 
+    //Handler
+    private Handler handler;
+
 
     public Game(String title, int witdh, int height){
         this.witdh = witdh;
@@ -63,9 +66,10 @@ public class Game implements Runnable { //implements runnable which allows to ru
         Assets.init(); // loads all images, music etcetera once.
 
         gameCamera = new GameCamera(this, 0, 0);
+        handler = new Handler(this);
 
-        gameState = new GameState(this); //this refers to this game class
-        menuState = new MenuState(this);
+        gameState = new GameState(handler); //this refers to this game class
+        menuState = new MenuState(handler);
         State.setStete(gameState);
 //        State.setStete(menuState);
 
