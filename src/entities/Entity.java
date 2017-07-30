@@ -10,6 +10,7 @@ public abstract class Entity {
    protected int width;
    protected int height;
    protected Handler handler;
+   protected Rectangle bounds;
 
     public Entity(Handler handler, float x, float y, int width, int height) {
         this.handler = handler;
@@ -17,6 +18,8 @@ public abstract class Entity {
         this.height=height;
         this.x = x;
         this.y = y;
+
+        bounds = new Rectangle(0, 0, width, height);
     }
 
     public float getX() {

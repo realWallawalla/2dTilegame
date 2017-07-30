@@ -40,6 +40,9 @@ public class World {
     }
 
     public Tile getTile(int x, int y){
+        if (x < 0 || y <0 || x >=width || y >=height) // prevent error if out of bounds.
+            return Tile.grassTile;
+
         Tile t = Tile.tiles[tiles[x][y]];
         if (t == null)
             return Tile.dirtTile;
@@ -61,5 +64,13 @@ public class World {
             }
         }
 
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight(){
+        return height;
     }
 }

@@ -65,8 +65,8 @@ public class Game implements Runnable { //implements runnable which allows to ru
         display.getFrame().addKeyListener(keyManager);
         Assets.init(); // loads all images, music etcetera once.
 
-        gameCamera = new GameCamera(this, 0, 0);
         handler = new Handler(this);
+        gameCamera = new GameCamera(handler, 0, 0);
 
         gameState = new GameState(handler); //this refers to this game class
         menuState = new MenuState(handler);
