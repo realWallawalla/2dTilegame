@@ -3,6 +3,7 @@ package game;
 import com.company.Display;
 import gfx.GameCamera;
 import input.KeyManager;
+import input.MouseManager;
 import states.GameState;
 import states.MenuState;
 import states.State;
@@ -27,11 +28,12 @@ public class Game implements Runnable { //implements runnable which allows to ru
     private Graphics g;
 
     //States
-    private State gameState;
-    private State menuState;
+    public State gameState;
+    public State menuState;
 
     //input
     private KeyManager keyManager;
+    private MouseManager mouseManager;
 
     //Camera
     private GameCamera gameCamera;
@@ -45,7 +47,7 @@ public class Game implements Runnable { //implements runnable which allows to ru
         this.height = height;
         this.title = title;
         keyManager = new KeyManager();
-
+        mouseManager = new MouseManager();
     }
 
 
@@ -63,6 +65,11 @@ public class Game implements Runnable { //implements runnable which allows to ru
     private void init(){
         display = new Display(title, witdh, height);
         display.getFrame().addKeyListener(keyManager);
+        display.getFrame().addMouseListener(mouseManager);
+        display.getFrame().addMouseMotionListener(mouseManager);
+        display.getCanvas().addMouseListener(mouseManager);
+        display.getCanvas().addMouseMotionListener(mouseManager);
+
         Assets.init(); // loads all images, music etcetera once.
 
         handler = new Handler(this);
@@ -70,8 +77,8 @@ public class Game implements Runnable { //implements runnable which allows to ru
 
         gameState = new GameState(handler); //this refers to this game class
         menuState = new MenuState(handler);
-        State.setStete(gameState);
-//        State.setStete(menuState);
+//        State.setStete(gameState);
+        State.setStete(menuState);
 
     }
 
@@ -111,6 +118,10 @@ public class Game implements Runnable { //implements runnable which allows to ru
 
     public KeyManager getKeyManager(){
         return keyManager;
+    }
+
+    public MouseManager getMouseManager() {
+        return mouseManager;
     }
 
     public GameCamera getGameCamera(){

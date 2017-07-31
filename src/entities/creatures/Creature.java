@@ -7,27 +7,28 @@ import org.omg.CORBA.PUBLIC_MEMBER;
 import tiles.Tile;
 
 public abstract class Creature extends Entity {
-    public static final int DEFAULT_HEALTH = 10;
     public static final float DEFAULT_SPEED = 6.0f;
     public static final int DEFAULT_CREATURE_WIDTH = 128,
                             DEFAULT_CREATURE_HEIGHT = 128;
 
-    protected int health;
     protected float speed;
     protected float xMove,
                     yMove;
 
     public Creature(Handler handler, float x, float y, int width, int height) {
         super(handler, x, y, width, height);// pass along x and y to super class
-        health = DEFAULT_HEALTH;
         speed = DEFAULT_SPEED;
         xMove = 0;
         yMove = 0;
     }
 
     public void move(){
-        moveX();
-        moveY();
+
+        //checks when creature/ player moves if collision with entities
+        if (!checkEntityCollisions(xMove, 0f))
+            moveX();
+        if (!checkEntityCollisions(0f, yMove))
+            moveY();
     }
 
     public void moveX(){

@@ -1,5 +1,7 @@
 package entities.creatures;
 
+import com.sun.org.apache.regexp.internal.RE;
+import entities.Entity;
 import game.Game;
 import game.Handler;
 import gfx.Animation;
@@ -15,6 +17,11 @@ public class Player extends Creature {
     private Animation animUp;
     private Animation animLeft;
     private Animation animRight;
+
+    //Attack timer
+    private long lastAttackTimer,
+                 attackColldown = 500,
+                 attackTimer = attackColldown;
 
     public Player(Handler handler, float x, float y) {
         super(handler, x, y, DEFAULT_CREATURE_WIDTH, DEFAULT_CREATURE_HEIGHT); // pass to the extented class
@@ -42,7 +49,53 @@ public class Player extends Creature {
         getInput();
         move();
         handler.getGameCamera().centerOnEntity(this); //center on this player
+        //Attack
+        checkAttacks();
 
+    }
+
+    private void checkAttacks(){ //create a rectangle depending on arrowkey pressed. check attackRectangel bounds for collision with other entity
+        attackTimer +=System.currentTimeMillis() - lastAttackTimer;
+        lastAttackTimer = System.currentTimeMillis();
+        if (attackTimer<attackColldown)
+            return; // if attack timer is not 800 yet. return and dont eun code below. if greater code in method will continue.
+        Rectangle cb = getCollisionBounds(0, 0);
+        Rectangle attRec = new Rectangle();
+        int attRecSize = 20;
+             attRec.width = attRecSize;
+             attRec.height = attRecSize;
+
+        if (handler.getKeyManager().aUp){
+            attRec.x =cb.x +cb.width/2 - attRecSize/2;
+            attRec.y =cb.y - attRecSize;
+        }else if (handler.getKeyManager().aDown) {
+            attRec.x = cb.x + cb.width / 2 - attRecSize / 2;
+            attRec.y = cb.y + cb.height;
+        } else if (handler.getKeyManager().aLeft) {
+            attRec.x = cb.x - attRecSize;
+            attRec.y = cb.y + cb.height/2 - attRecSize/2;
+        } else if (handler.getKeyManager().aRight) {
+            attRec.x = cb.x + cb.width;
+            attRec.y = cb.y + cb.height/2 - attRecSize/2;
+        } else
+            return;
+
+        attackTimer = 0;
+
+        for(Entity e : handler.getWorld().getEntityManager().getEntities()){
+            if (e.equals(this))
+                continue;
+            if (e.getCollisionBounds(0, 0).intersects(attRec)) {
+                e.hurt(1);
+                return;
+            }
+        }
+    }
+
+
+    @Override
+    public void die() {
+        System.out.println("you died!");
     }
 
     private void getInput(){

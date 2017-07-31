@@ -26,7 +26,7 @@ public class World {
 
         entityManager.getPlayer().setX(spawnX);
         entityManager.getPlayer().setY(spawnY);
-        entityManager.addEntity(new Tree(handler, 100, 250));
+        entityManager.addEntity(new Tree(handler, 100, 150));
 
     }
 
@@ -78,6 +78,10 @@ public class World {
             }
         }
 
+    }
+
+    public EntityManager getEntityManager() {
+        return entityManager;
     }
 
     public int getWidth() {
