@@ -6,6 +6,7 @@ import game.Game;
 import game.Handler;
 import gfx.Animation;
 import gfx.Assets;
+import inventory.Inventory;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -22,6 +23,8 @@ public class Player extends Creature {
     private long lastAttackTimer,
                  attackColldown = 500,
                  attackTimer = attackColldown;
+    //Inventory
+    private Inventory inventory;
 
     public Player(Handler handler, float x, float y) {
         super(handler, x, y, DEFAULT_CREATURE_WIDTH, DEFAULT_CREATURE_HEIGHT); // pass to the extented class
@@ -36,6 +39,8 @@ public class Player extends Creature {
         animUp = new Animation(200, Assets.player_up);
         animLeft = new Animation(200, Assets.player_left);
         animRight = new Animation(200, Assets.player_right);
+
+        inventory = new Inventory(handler);
     }
 
     @Override
@@ -51,6 +56,8 @@ public class Player extends Creature {
         handler.getGameCamera().centerOnEntity(this); //center on this player
         //Attack
         checkAttacks();
+        //Inventory
+        inventory.tick();
 
     }
 
@@ -122,6 +129,8 @@ public class Player extends Creature {
         g.drawImage(getCurrentAnimationFrame(),(int)(x - handler.getGameCamera().getxOffset()),
                 (int)(y - handler.getGameCamera().getyOffset()), width, height, null);
 
+        inventory.render(g);
+
 
         //SHOWS HIT BOX PLAYER
         g.setColor(Color.red);
@@ -146,4 +155,11 @@ public class Player extends Creature {
 
     }
 
+    public Inventory getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(Inventory inventory) {
+        this.inventory = inventory;
+    }
 }

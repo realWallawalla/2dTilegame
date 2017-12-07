@@ -4,6 +4,7 @@ import entities.EntityManager;
 import entities.creatures.Player;
 import entities.statics.Tree;
 import game.Handler;
+import items.ItemManager;
 import tiles.Tile;
 import utils.Utils;
 
@@ -17,10 +18,13 @@ public class World {
     private int[][] tiles;
     //Entities
     private EntityManager entityManager;
+    //Item
+    private ItemManager itemManager;
 
     public World(Handler handler, String path){
         this.handler = handler;
         entityManager = new EntityManager(handler, new Player(handler, 100,100));
+        itemManager = new ItemManager(handler);
 
         loadWorld(path);
 
@@ -31,7 +35,9 @@ public class World {
     }
 
     public void tick(){
+        itemManager.tick();
         entityManager.tick();
+
     }
 
     public void render(Graphics g){
@@ -49,8 +55,12 @@ public class World {
             }
         }
 
+
+        //Items
+        itemManager.render(g);
         //Entities
         entityManager.render(g);
+
     }
 
     public Tile getTile(int x, int y){
@@ -78,6 +88,22 @@ public class World {
             }
         }
 
+    }
+
+    public Handler getHandler() {
+        return handler;
+    }
+
+    public void setHandler(Handler handler) {
+        this.handler = handler;
+    }
+
+    public ItemManager getItemManager() {
+        return itemManager;
+    }
+
+    public void setItemManager(ItemManager itemManager) {
+        this.itemManager = itemManager;
     }
 
     public EntityManager getEntityManager() {

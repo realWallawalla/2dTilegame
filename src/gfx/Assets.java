@@ -13,13 +13,15 @@ public class Assets {
     private static final int playerWidth = 128, playerHeight = 128;
     private static final int tileWidth = 64, tileHeight = 64;
     private static final int treeWidth = 96, treeHeight = 96;
+    private static final int itemWidth = 34, itemHeight = 34;
 
     public static BufferedImage stone,
                                 sand,
                                 grass,
                                 dirt,
                                 sandStone,
-                                tree;
+                                tree,
+                                sword;
 
     public  static BufferedImage[] start_button;
 
@@ -34,6 +36,7 @@ public class Assets {
         SpriteSheet sheet2 = new SpriteSheet(ImageLoader.loadImage("/textures/mapTiles.png"));
         SpriteSheet sheet3 = new SpriteSheet(ImageLoader.loadImage("/textures/trees.png"));
         SpriteSheet sheet4 = new SpriteSheet(ImageLoader.loadImage("/textures/startButton.png"));
+        SpriteSheet items = new SpriteSheet(ImageLoader.loadImage("/textures/items.jpg"));
 
         //testSpritesheet
         /*
@@ -91,8 +94,8 @@ public class Assets {
         grass = sheet2.crop(0, (tileHeight * 2), tileWidth, tileHeight);
         dirt = sheet2.crop(0, (tileHeight * 3), tileWidth, tileHeight);
         sandStone = sheet2.crop(0, (tileHeight * 4), tileWidth, tileHeight);
-
         tree = sheet3.crop(0, 0, treeWidth, treeHeight);
+        sword = items.crop(0, 0, itemWidth, itemHeight);
         //...
 
     }
